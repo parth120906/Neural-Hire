@@ -10,7 +10,7 @@ export default defineConfig({
   server:{
     proxy:{
       '/api':{
-        target:'https://neural-hire.onrender.com/api',
+        target:'https://neural-hire.onrender.com',
         changeOrigin:true,
         secure:false
       }
