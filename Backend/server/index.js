@@ -20,6 +20,10 @@ const PORT = process.env.PORT || 5000;
 // Connect DB
 ConnectDB();
 
+app.get("/", (req, res) => {
+  res.send("Welcome to the Job Portal API");
+});
+
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // ✅ FIX
