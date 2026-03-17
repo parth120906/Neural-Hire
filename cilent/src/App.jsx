@@ -16,10 +16,12 @@ import RecruiterDashboard from './pages/recruiter/RecruiterDashboard'
 import RecuiterJob from './pages/recruiter/RecruiterJob'
 import CreateJobPage from './components/recuiter/CreateJobPage'
 import ViewApplications from './pages/recruiter/RecuiterApplications'
+import BackButton from './components/BackButton'
 
 function App() {
   return (
     <>
+      <BackButton />
 
     <Routes>
       <Route path='/' element ={<HomePage/>}/>

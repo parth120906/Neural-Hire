@@ -2,8 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
 
-// ================= REGISTER =================
-// Public register → only normal user
+
 const registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -40,7 +39,7 @@ const registerUser = async (req, res) => {
   }
 };
 
-// ================= LOGIN =================
+
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -62,7 +61,7 @@ const loginUser = async (req, res) => {
       throw new Error("Account blocked by admin");
     }
 
-    // 🔐 JWT token generation
+
     const token = jwt.sign(
       {
         userId: user._id,
@@ -88,14 +87,14 @@ const loginUser = async (req, res) => {
   }
 };
 
-// ================= PRIVATE (TEST) =================
+
 const privateAccess = (req, res) => {
   res.json({
     message: `Authenticated user: ${req.user.name}`,
   });
 };
 
-// ================= GET MY PROFILE =================
+
 const getMe = async (req, res) => {
   res.status(200).json({
     _id: req.user._id,
@@ -109,7 +108,7 @@ const getMe = async (req, res) => {
   });
 };
 
-// ================= UPDATE MY PROFILE =================
+
 const updateMe = async (req, res) => {
   try {
     const { name, email, password } = req.body;

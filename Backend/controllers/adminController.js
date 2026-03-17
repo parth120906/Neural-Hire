@@ -3,9 +3,9 @@ import Job from "../models/jobModel.js";
 import Application from "../models/applicationModel.js";
 import cloudinary from "../utils/cloudnairy.js";
 
-/* ================= USERS ================= */
 
-// GET all users
+
+
 const getAllUsers = async (req, res) => {
   try {
     const users = await User.find().select("-password");
@@ -21,7 +21,7 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-// GET single user
+
 const getSingleUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id).select("-password");
@@ -41,7 +41,7 @@ const getSingleUser = async (req, res) => {
   }
 };
 
-// UPDATE user (block / recruiter / admin)
+
 const updateUser = async (req, res) => {
   try {
     const { isActive, isRecruiter, isAdmin } = req.body;
@@ -70,9 +70,9 @@ const updateUser = async (req, res) => {
   }
 };
 
-/* ================= JOBS ================= */
 
-// GET all jobs
+
+
 const getAllJobs = async (req, res) => {
   try {
     const jobs = await Job.find();
@@ -88,7 +88,7 @@ const getAllJobs = async (req, res) => {
   }
 };
 
-// GET single job
+
 const getSingleJob = async (req, res) => {
   try {
     const job = await Job.findById(req.params.id);
@@ -108,7 +108,7 @@ const getSingleJob = async (req, res) => {
   }
 };
 
-// DELETE job
+
 const deleteJob = async (req, res) => {
   try {
     const job = await Job.findById(req.params.id);
@@ -130,9 +130,9 @@ const deleteJob = async (req, res) => {
   }
 };
 
-/* ================= APPLICATIONS ================= */
 
-// GET all applications (Admin only)
+
+
 const getAllApplications = async (req, res) => {
   try {
     if (!req.user.isAdmin) {
@@ -155,7 +155,7 @@ const getAllApplications = async (req, res) => {
   }
 };
 
-// DELETE application (with resume cleanup)
+
 const deleteApplication = async (req, res) => {
   try {
     if (!req.user.isAdmin) {
@@ -170,7 +170,7 @@ const deleteApplication = async (req, res) => {
       throw new Error("Application not found");
     }
 
-    // ☁️ Delete resume from Cloudinary
+
     if (application.resumeFile) {
       const urlParts = application.resumeFile.split("/");
       const fileWithExt = urlParts[urlParts.length - 1];
@@ -193,7 +193,7 @@ const deleteApplication = async (req, res) => {
   }
 };
 
-/* ================= EXPORT ================= */
+
 
 const adminController = {
   getAllUsers,

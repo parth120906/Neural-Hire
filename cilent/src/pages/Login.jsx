@@ -30,8 +30,8 @@ const dispatch = useDispatch()
     e.preventDefault()
 
     if (!email || !password) {
-      toast.error("Please fill all fields")
-      return
+      toast.error("Invalid email or password", { autoClose: 3000 });
+      return;
     }
 
     dispatch(loginUser(formData))
@@ -39,7 +39,20 @@ const dispatch = useDispatch()
 
   useEffect(() => {
     if (isError) {
-      toast.error(message)
+      let displayMsg = message;
+      if (message) {
+        const lowerMsg = message.toLowerCase();
+        if (lowerMsg.includes("not found")) {
+          displayMsg = "User not found";
+        } else if (lowerMsg.includes("incorrect") || lowerMsg.includes("password")) {
+          displayMsg = "Incorrect password";
+        } else if (lowerMsg.includes("invalid") || lowerMsg.includes("wrong")) {
+          displayMsg = "Invalid email or password";
+        }
+      } else {
+        displayMsg = "Invalid email or password";
+      }
+      toast.error(displayMsg, { autoClose: 3000 });
     }
   
     if (isSuccess || user) {

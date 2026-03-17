@@ -31,8 +31,8 @@ export default function RegisterPage() {
     e.preventDefault()
 
     if (!name || !email || !password) {
-      toast.error("Please fill all fields")
-      return
+      toast.error("Please fill all fields", { autoClose: 3000 });
+      return;
     }
 
     dispatch(registerUser(formData))
@@ -40,7 +40,7 @@ export default function RegisterPage() {
 
   useEffect(() => {
     if (isError) {
-      toast.error(message)
+      toast.error(message || "Registration failed", { autoClose: 3000 });
     }
 
     if (isSuccess || user) {

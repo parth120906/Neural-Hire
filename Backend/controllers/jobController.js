@@ -42,7 +42,7 @@ const createJob = async (req, res) => {
   }
 };
 
-// Recruiter → Get own jobs
+
 const getMyJobs = async (req, res) => {
   try {
     if (!req.user.isRecruiter && !req.user.isAdmin) {
@@ -65,7 +65,7 @@ const getMyJobs = async (req, res) => {
   }
 };
 
-// Recruiter → Update own job
+
 const updateMyJob = async (req, res) => {
   try {
     const job = await Job.findById(req.params.id);
@@ -97,7 +97,7 @@ const updateMyJob = async (req, res) => {
   }
 };
 
-// Recruiter → Close job
+
 const closeJob = async (req, res) => {
   try {
     const job = await Job.findById(req.params.id);
@@ -125,7 +125,7 @@ const closeJob = async (req, res) => {
   }
 };
 
-// Recruiter → Delete own job
+
 const deleteMyJob = async (req, res) => {
   try {
     const job = await Job.findById(req.params.id);
@@ -209,7 +209,7 @@ const getAllActiveJobs = async (req, res) => {
   }
 };
 
-// Candidate → Get single active job
+
 const getSingleActiveJob = async (req, res) => {
   try {
     const job = await Job.findOne({
