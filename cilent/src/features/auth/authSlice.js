@@ -112,7 +112,7 @@ const authSlice = createSlice({
                 state.isError = true
                 state.message = action.payload
             })
-        
+
             .addCase(loginUser.pending, (state) => {
                 state.isLoading = true
             })
@@ -159,7 +159,7 @@ const authSlice = createSlice({
                 state.isError = true
                 state.message = action.payload
             })
-             .addCase(logoutUser.fulfilled, (state, action) => {
+            .addCase(logoutUser.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isError = false
                 state.message = ""

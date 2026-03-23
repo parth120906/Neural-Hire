@@ -3,40 +3,118 @@ import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
 
 
-const registerUser = async (req, res) => {
+const createUser = async ({ name, email, password, role, isRecruiter, companyName }) => {
+  const existing = await User.findOne({ email });
+  if (existing) {
+    throw new Error("User already exists");
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  return await User.create({
+    name,
+    email,
+    password: hashedPassword,
+    isAdmin: false,
+    isRecruiter,
+    role,
+    companyName: companyName || "",
+    isActive: true,
+  });
+};
+
+const registerCandidate = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    
+
     if (!name || !email || !password) {
       res.status(400);
       throw new Error("Please fill all details");
     }
 
-    const userExists = await User.findOne({ email });
-    if (userExists) {
-      res.status(400);
-      throw new Error("User already exists");
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    await User.create({
+    const user = await createUser({
       name,
       email,
-      password: hashedPassword,
-      isAdmin: false,
+      password,
+      role: "candidate",
       isRecruiter: false,
-      isActive: true,
     });
 
+    const token = jwt.sign(
+      {
+        userId: user._id,
+        isAdmin: user.isAdmin,
+        isRecruiter: user.isRecruiter,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "30d" }
+    );
+
     res.status(201).json({
-      success: true,
-      message: "User registered successfully",
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      companyName: user.companyName || "",
+      isAdmin: user.isAdmin,
+      isRecruiter: user.isRecruiter,
+      isActive: user.isActive,
+      token,
     });
   } catch (error) {
     res.status(res.statusCode || 500);
     throw new Error(error.message);
   }
+};
+
+const registerRecruiter = async (req, res) => {
+  try {
+    const { name, email, password, companyName } = req.body;
+
+    if (!name || !email || !password || !companyName) {
+      res.status(400);
+      throw new Error("Please fill all details");
+    }
+
+    const user = await createUser({
+      name,
+      email,
+      password,
+      role: "recruiter",
+      isRecruiter: true,
+      companyName,
+    });
+
+    const token = jwt.sign(
+      {
+        userId: user._id,
+        isAdmin: user.isAdmin,
+        isRecruiter: user.isRecruiter,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "30d" }
+    );
+
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      companyName: user.companyName || "",
+      isAdmin: user.isAdmin,
+      isRecruiter: user.isRecruiter,
+      isActive: user.isActive,
+      token,
+    });
+  } catch (error) {
+    res.status(res.statusCode || 500);
+    throw new Error(error.message);
+  }
+};
+
+const registerUser = async (req, res) => {
+  // legacy endpoint - default to candidate registration
+  return registerCandidate(req, res);
 };
 
 
@@ -76,6 +154,8 @@ const loginUser = async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      role: user.role || (user.isRecruiter ? "recruiter" : "candidate"),
+      companyName: user.companyName || "",
       isAdmin: user.isAdmin,
       isRecruiter: user.isRecruiter,
       isActive: user.isActive,
@@ -100,6 +180,8 @@ const getMe = async (req, res) => {
     _id: req.user._id,
     name: req.user.name,
     email: req.user.email,
+    role: req.user.role || (req.user.isRecruiter ? "recruiter" : "candidate"),
+    companyName: req.user.companyName || "",
     isAdmin: req.user.isAdmin,
     isRecruiter: req.user.isRecruiter,
     isActive: req.user.isActive,
@@ -155,6 +237,8 @@ const updateMe = async (req, res) => {
 
 const authController = {
   registerUser,
+  registerCandidate,
+  registerRecruiter,
   loginUser,
   privateAccess,
   getMe,

@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema(
       required: [true, "Password is required"],
     },
 
-    
+
     isAdmin: {
       type: Boolean,
       default: false,
@@ -31,6 +31,17 @@ const userSchema = new mongoose.Schema(
       default: false,
     },
 
+    role: {
+      type: String,
+      enum: ["candidate", "recruiter", "admin"],
+      default: "candidate",
+    },
+
+    companyName: {
+      type: String,
+      trim: true,
+      default: "",
+    },
 
     isActive: {
       type: Boolean,

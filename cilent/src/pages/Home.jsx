@@ -50,7 +50,7 @@ export default function HomePage() {
                 Neural Hire connects candidates and recruiters using AI—helping you discover the right role or talent in seconds, not weeks.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4 mb-10">
+              <div className="flex flex-col sm:flex-row gap-4 mb-6">
                 <Link
                   to={primaryCta.to}
                   className="px-8 py-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-full font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 text-center transform hover:scale-105 active:scale-95"
@@ -64,6 +64,23 @@ export default function HomePage() {
                   {secondaryCta.label}
                 </Link>
               </div>
+
+              {!user && (
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Link
+                    to="/register-candidate"
+                    className="px-8 py-4 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-full font-semibold hover:shadow-lg hover:shadow-indigo-500/50 transition-all duration-300 text-center transform hover:scale-105 active:scale-95"
+                  >
+                    Register as Candidate
+                  </Link>
+                  <Link
+                    to="/register-recruiter"
+                    className="px-8 py-4 bg-slate-800/50 text-white border border-slate-700/50 rounded-full font-semibold hover:bg-slate-700/50 transition-all duration-300 text-center backdrop-blur-sm transform hover:scale-105 active:scale-95"
+                  >
+                    Register as Recruiter
+                  </Link>
+                </div>
+              )}
               
               <div className="flex flex-col sm:flex-row gap-6 text-sm text-slate-400">
                 <div className="flex items-center gap-3">

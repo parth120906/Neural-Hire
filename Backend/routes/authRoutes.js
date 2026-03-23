@@ -5,6 +5,8 @@ import protect from "../middleware/protect.js";
 const router = express.Router();
 
 router.post("/register", authController.registerUser);
+router.post("/register/candidate", authController.registerCandidate);
+router.post("/register/recruiter", authController.registerRecruiter);
 router.post("/login", authController.loginUser);
 
 // test protected route
