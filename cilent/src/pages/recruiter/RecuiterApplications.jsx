@@ -236,9 +236,9 @@ function ViewApplications() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_24rem] gap-6 items-start">
+        <div className="flex flex-col-reverse gap-6 w-full items-start">
           {/* Table */}
-          <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl border border-slate-700/50 backdrop-blur-md overflow-hidden shadow-xl">
+          <div className="w-full bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl border border-slate-700/50 backdrop-blur-md overflow-hidden shadow-xl">
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-slate-700/30">
               <thead className="bg-slate-900/50">
@@ -440,10 +440,10 @@ function ViewApplications() {
           </div>
 
           {/* Details panel (sticky, not fixed) */}
-          <div className="hidden lg:block lg:sticky lg:top-8">
-            <div className="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden">
-              <div className="bg-gradient-to-br from-blue-500 to-blue-600 px-6 py-8 text-white">
-                <div className="flex items-center justify-between">
+          <div className="w-full">
+            <div className="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden flex flex-col md:flex-row w-full">
+              <div className="bg-gradient-to-br from-blue-500 to-blue-600 px-6 py-8 text-white md:w-1/3 flex flex-col justify-center">
+                <div className="flex flex-col items-start gap-4">
                   <div className="flex items-center gap-4">
                     <div className="w-14 h-14 bg-white/95 rounded-full flex items-center justify-center text-blue-700 text-xl font-bold shadow">
                       {selectedApp?.candidateId?.name?.charAt(0) || "U"}
@@ -459,7 +459,7 @@ function ViewApplications() {
                   </div>
                   {selectedApp && (
                     <span
-                      className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(
+                      className={`px-3 py-1 mt-4 rounded-full text-xs font-semibold self-start ${getStatusColor(
                         selectedApp.status || "applied"
                       )}`}
                     >
@@ -469,7 +469,7 @@ function ViewApplications() {
                 </div>
               </div>
 
-              <div className="p-6">
+              <div className="p-6 md:w-2/3 flex flex-col justify-center">
                 {!selectedApp ? (
                   <p className="text-sm text-gray-600">
                     Click <span className="font-semibold">View</span> on any row to see candidate

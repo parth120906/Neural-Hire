@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect } from 'react'
-import { Bell, ChevronDown, Search, Plus, Eye, Trash2, Download, CheckCircle, XCircle } from 'lucide-react'
+import { Bell, Search, Plus, Eye, Trash2, Download, CheckCircle, XCircle } from 'lucide-react'
 import {
 getAllJobs,
 deleteRecruiterJob,
@@ -134,11 +134,10 @@ const navItems = [
 
           <div className="flex items-center gap-3 pl-4 border-l border-slate-700/50">
             <div className="w-9 h-9 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center text-white font-semibold text-sm shadow-lg">
-              RJ
+              {user?.name?.charAt(0) || 'U'}
             </div>
             <div className="flex items-center gap-1">
-              <span className="text-sm font-medium text-slate-300">Recruiter</span>
-              <ChevronDown size={16} className="text-slate-500" />
+              <span className="text-sm font-medium text-slate-300">{user?.name || 'Recruiter'}</span>
             </div>
           </div>
         </div>

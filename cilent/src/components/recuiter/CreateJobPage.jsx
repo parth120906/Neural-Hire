@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createNewJob } from '../../features/recruiter/recruiterSlice';
+import { Link } from 'react-router-dom';
 
 const INITIAL_FORM_STATE = {
   title: '',
@@ -86,9 +87,13 @@ export default function CreateJobPage() {
       {/* Header Section */}
       <div className="border-b border-slate-700/50 bg-gradient-to-r from-slate-800/50 to-slate-900/50 backdrop-blur-md relative z-10">
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          <p className="mb-2 text-sm text-slate-400 font-light">
-            Dashboard / My Jobs / Create Job
-          </p>
+          <div className="mb-3 flex items-center text-sm text-slate-400 font-light">
+            <Link to="/recuiter/dashboard" className="hover:text-slate-300 transition-colors">Dashboard</Link>
+            <span className="mx-2">/</span>
+            <Link to="/recuiter/dashboard" className="hover:text-slate-300 transition-colors">My Jobs</Link>
+            <span className="mx-2">/</span>
+            <span className="text-slate-300">Create Job</span>
+          </div>
           <h1 className="mb-2 text-4xl font-bold text-white tracking-tight">
             Create Job
           </h1>

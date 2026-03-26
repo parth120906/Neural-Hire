@@ -1,14 +1,11 @@
 import { GoogleGenAI } from "@google/genai";
 import Job from "../models/jobModel.js";
 
-// Gemini client
 const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY,
 });
 
-/**
- * 1️⃣ USER QUESTION → JOB RECOMMENDATION (with job reference)
- */
+
 export const askJobAI = async (req, res) => {
   try {
     const { question } = req.body;
@@ -96,9 +93,6 @@ ${JSON.stringify(jobs)}
   }
 };
 
-/**
- * 2️⃣ RESUME → JOB MATCHING (with job reference)
- */
 export const matchResumeWithJobs = async (req, res) => {
   try {
     const { resumeText } = req.body;

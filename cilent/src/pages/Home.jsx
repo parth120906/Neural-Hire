@@ -9,15 +9,19 @@ export default function HomePage() {
   const { user } = useSelector((state) => state.auth);
 
   const primaryCta = user
-    ? user.isRecruiter || user.isAdmin
-      ? { to: '/recuiter/dashboard', label: 'Go to recruiter dashboard' }
-      : { to: '/jobs', label: 'Browse jobs' }
+    ? user.isAdmin
+      ? { to: '/admin/dashboard', label: 'Go to admin dashboard' }
+      : user.isRecruiter
+        ? { to: '/recuiter/dashboard', label: 'Go to recruiter dashboard' }
+        : { to: '/jobs', label: 'Browse jobs' }
     : { to: '/jobs', label: 'Browse jobs' };
 
   const secondaryCta = user
-    ? user.isRecruiter || user.isAdmin
-      ? { to: '/recuiter/create-job', label: 'Post a new job' }
-      : { to: '/applications/me', label: 'View my applications' }
+    ? user.isAdmin
+      ? { to: '/admin/jobs', label: 'Manage Jobs' }
+      : user.isRecruiter
+        ? { to: '/recuiter/create-job', label: 'Post a new job' }
+        : { to: '/applications/me', label: 'View my applications' }
     : { to: '/login', label: 'Post a job' };
 
   return (
@@ -263,39 +267,41 @@ export default function HomePage() {
       </section>
 
       {/* CTA SECTION */}
-      <section className="py-24 px-4 bg-gradient-to-br from-slate-900 to-slate-950 relative overflow-hidden">
-        {/* Background elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-purple-500/10 to-transparent rounded-full blur-3xl" />
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-blue-500/10 to-transparent rounded-full blur-3xl" />
-        </div>
-        
-        <div className="w-full max-w-4xl mx-auto relative z-10">
-          <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-3xl p-12 md:p-16 text-center border border-slate-700/50 backdrop-blur-md">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight tracking-tight">
-              Ready to transform your <br className="hidden sm:block" /> career or hiring?
-            </h2>
-            <p className="text-lg text-slate-300 mb-12 max-w-2xl mx-auto font-light">
-              Join thousands of professionals and companies already using our platform to find success.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/register"
-                className="px-8 py-4 bg-gradient-to-r from-white to-slate-100 text-slate-900 rounded-full font-bold hover:shadow-lg transition-all duration-300 text-lg text-center transform hover:scale-105 active:scale-95"
-              >
-                Register as Candidate
-              </Link>
-              <Link
-                to="/register"
-                className="px-8 py-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white border-2 border-transparent rounded-full font-bold hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 text-lg text-center transform hover:scale-105 active:scale-95"
-              >
-                Register as Recruiter
-              </Link>
+      {!user && (
+        <section className="py-24 px-4 bg-gradient-to-br from-slate-900 to-slate-950 relative overflow-hidden">
+          {/* Background elements */}
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-purple-500/10 to-transparent rounded-full blur-3xl" />
+            <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-blue-500/10 to-transparent rounded-full blur-3xl" />
+          </div>
+          
+          <div className="w-full max-w-4xl mx-auto relative z-10">
+            <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-3xl p-12 md:p-16 text-center border border-slate-700/50 backdrop-blur-md">
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight tracking-tight">
+                Ready to transform your <br className="hidden sm:block" /> career or hiring?
+              </h2>
+              <p className="text-lg text-slate-300 mb-12 max-w-2xl mx-auto font-light">
+                Join thousands of professionals and companies already using our platform to find success.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link
+                  to="/register-candidate"
+                  className="px-8 py-4 bg-gradient-to-r from-white to-slate-100 text-slate-900 rounded-full font-bold hover:shadow-lg transition-all duration-300 text-lg text-center transform hover:scale-105 active:scale-95"
+                >
+                  Register as Candidate
+                </Link>
+                <Link
+                  to="/register-recruiter"
+                  className="px-8 py-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white border-2 border-transparent rounded-full font-bold hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 text-lg text-center transform hover:scale-105 active:scale-95"
+                >
+                  Register as Recruiter
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* FOOTER */}
       <footer className="bg-slate-950 border-t border-slate-800 text-slate-400 py-12 px-4">
